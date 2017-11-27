@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Chat App</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style type="text/css">
+        div.msgbbl{
+            backgroud-color : gray;
+            padding : 5px 10px;
+            border-radius: 10px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+    </style>
+  </head>
+  <body>
+        <div class = "well text-center">
+            <h1>Flask Chat App</h1>
+        </div>
+        <div class = "container">
+            <div class = "col-sm-8">
+                <div id="no_message">
+                    <h1 style = "color: #ccc">No Messages Yet!</h1>
+                    <div class="message-holder"></div>
+                </div>
+            </div>
+        <div class="col-sm-4">
+            <form action = "" method = "POST">
+                <b>Type your message below</b>
+                <hr>
+                <div class="form-group">
+                    <label for="username">Name:</label>
+                    <input type="text" class="username form-control" id="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <input type="text" class="message form-control" id="message" placeholder = "Message">
+                </div>
+                  <button type="submit" class="btn btn-success">Send!</button>
+            </form>
+        </div>
+    </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <script type="text/javascript">
+        var socket = io.connect("http://localhost:5000/");
+        //broadcast a message
+        socket.on('connect',function(){
+            socket.emit('my event',{
+                data: 'User Connected'
+            });
+        });
+        var form = $('form').on('submit',function(e){
+            e.preventDefault();
+            var username = $('input.username').val();
+            var message = $('input.message').val();
+            socket.emit("my event",{
+                user:username,
+                msg:message
+            });
+            //Empty the message the field
+            $('input.message').val('').focus();
+        });
+
+        //capture message
+            socket.on('my response',function(msg){
+                if(typeof msg.user !== 'undefined'){
+                    $('h1').remove();
+                    $('div.message-holder').append('<div class="msgbbl"><b>'+msg.user+'</b>:'+msg.msg+'</div>');
+                }
+                console.log(msg);
+            });
+        </script>
+  </body>
+</html>
