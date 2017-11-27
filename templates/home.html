@@ -48,7 +48,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
         <script type="text/javascript">
-        var socket = io.connect("http://localhost:5000/");
+        var socket = io.connect("https://pure-plains-77121.herokuapp.com/");
         //broadcast a message
         socket.on('connect',function(){
             socket.emit('my event',{

@@ -1,0 +1,11 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[packages]
+flask = "*"
+flask-socketio = "*"
+eventlet = "*"
+
+[requires]
+python_version = "3.6"
