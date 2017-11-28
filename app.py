@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'donottellanyoneaboutthis'
 
 #socketio wrapper for the app
-socketio = SocketIO(app)
+socketio = SocketIO(app,async_mode = 'eventlet')
 
 @app.route('/')
 def home():
